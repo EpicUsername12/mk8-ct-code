@@ -1,0 +1,12 @@
+*.elf
+build_files/
+.vscode/
+*.bin
+*.map
+build/
+*.o
+*.d
+build_game_files_archive/release.zip
+build_game_files_archive/ctgp_filelist.ver
+build_game_files_archive/file_data
+build_game_files_archive/content
