@@ -140,30 +140,4 @@ for e in diff_list:
 print("")
 
 
-choice = input("Do you want to push updated files (y/n): ")
-if not "y" in choice:
-	exit(0)
-
-passw = input("Ok, then enter server password: ")
-if "T+uJu7WbkUu&u;2k" not in passw:
-	exit(0)
-
-print("")
-
-host = "51.91.56.16"
-port = 22
-transport = paramiko.Transport((host, port))
-
-password = "T+uJu7WbkUu&u;2k"
-username = "ubuntu"
-
-transport.connect(username = username, password = password)
-
-sftp = paramiko.SFTPClient.from_transport(transport)
-sftp.put(os.getcwd() + "/ctgp_filelist.ver", "/var/www/non_host/ctgp/ctgp_filelist.ver")
-for e in diff_list:
-	print("Uploading: file_data/" + e + ".dat")
-	sftp.put(os.getcwd() + "/file_data/" + e + ".dat", "/var/www/non_host/ctgp/file_data/" + e + ".dat")
-
-transport.close()
-sftp.close()
+exit(0)
