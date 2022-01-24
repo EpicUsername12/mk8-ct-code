@@ -15,9 +15,11 @@ For Python3:
 
 # Preparation
 
-``cd build_game_files_archive``
-``mkdir content``
-``mkdir file_data``
+- ``cd build_game_files_archive``
+
+- ``mkdir content``
+
+- ``mkdir file_data``
 
 - Download [**this archive**](https://mega.nz/file/5RFSQDZK#rj7IlSGKvwKa6GNfgZte0a04BBtAKacG45YwfBSs6SQ) and put the files in the ``content`` folder.
 
@@ -27,7 +29,7 @@ For Python3:
 
 # If you want to edit CTGP game files
 
-- Edit game files in ``/content``
+- Edit game files in ``/build_game_files_archive/content``
 
 - Go in ``/build_game_files_archive``
 
