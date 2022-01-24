@@ -15,21 +15,19 @@ constexpr inline size_t MaxMemoryMappings = 512;
 #define MSR_R0_BIT (1 << 3) // Reserved
 #define MSR_DR_BIT (1 << 4) // Data address translation enable
 #define MSR_IR_BIT (1 << 5) // Instruction address translation enable
-#define MSR_IP_BIT                                                             \
-  (1 << 6) // Exception prefix, 0 -> fetch from 0x000n_nnnn | 1 -> fetch from
-           // 0xFFFn_nnnn
+#define MSR_IP_BIT \
+    (1 << 6) // Exception prefix, 0 -> fetch from 0x000n_nnnn | 1 -> fetch from
+             // 0xFFFn_nnnn
 #define MSR_R1_BIT (1 << 7) // Reserved
 #define MSR_FE1_BIT (1 << 8) // IEEE floating-point exception mode 1
-#define MSR_BE_BIT                                                             \
-  (1 << 9) // Branch trace enable (generates a branch type trace exception when
-           // a branch instruction executes successfully)
-#define MSR_SE_BIT                                                             \
-  (1 << 10) // Single-step trace enable (except rfi, isync, and sc)
+#define MSR_BE_BIT \
+    (1 << 9) // Branch trace enable (generates a branch type trace exception when
+             // a branch instruction executes successfully)
+#define MSR_SE_BIT (1 << 10) // Single-step trace enable (except rfi, isync, and sc)
 #define MSR_FE0_BIT (1 << 11) // IEEE floating-point exception mode 0
 #define MSR_ME_BIT (1 << 12) // Machine check enable
 #define MSR_FP_BIT (1 << 13) // Floating-point available
-#define MSR_PR_BIT                                                             \
-  (1 << 14) // Privilege level | 0 -> supervisor mode, 1 -> user mode
+#define MSR_PR_BIT (1 << 14) // Privilege level | 0 -> supervisor mode, 1 -> user mode
 #define MSR_EE_BIT (1 << 15) // External interrupt enable
 #define MSR_ILE_BIT (1 << 16) // Exception little-endian mode
 #define MSR_R2_BIT (1 << 17) // Reserved
@@ -82,10 +80,8 @@ constexpr inline size_t MaxMemoryMappings = 512;
 #define BATU_BEPI_MASK 0xFFFE0000
 #define BATU_BL_MASK 0x7FF
 #define BATU_BL_SHIFT 2
-#define BATU_VS_BIT                                                            \
-  (1 << 1) // Can supervisor access this? (compared against MSR_PR bit)
-#define BATU_VP_BIT                                                            \
-  (1 << 0) // Can the user access this? (compared against MSR_PR bit)
+#define BATU_VS_BIT (1 << 1) // Can supervisor access this? (compared against MSR_PR bit)
+#define BATU_VP_BIT (1 << 0) // Can the user access this? (compared against MSR_PR bit)
 
 #define BATL_BRPN_MASK 0xFFFE0000
 #define BATL_WIMG_MASK 0xF
@@ -182,66 +178,66 @@ constexpr inline size_t MaxMemoryMappings = 512;
 #define GPR_MASK 31
 
 constexpr inline uint32_t PowerPC_BL(uint32_t dest, uint32_t source) {
-  return (0x48000001 | ((dest - source) & 0x03FFFFFC));
+    return (0x48000001 | ((dest - source) & 0x03FFFFFC));
 }
 constexpr inline uint32_t PowerPC_BLA(uint32_t absolute_address) {
-  return (0x48000003 | (absolute_address & 0x03FFFFFC));
+    return (0x48000003 | (absolute_address & 0x03FFFFFC));
 }
 constexpr inline uint32_t PowerPC_MFMSR(uint32_t RS) {
-  return ((31 << 26) | (RS << 21) | (83 << 1));
+    return ((31 << 26) | (RS << 21) | (83 << 1));
 }
 constexpr inline uint32_t PowerPC_MTMSR(uint32_t RS) {
-  return ((31 << 26) | (RS << 21) | (146 << 1));
+    return ((31 << 26) | (RS << 21) | (146 << 1));
 }
 constexpr inline uint32_t PowerPC_MTSPR(uint32_t RS, uint32_t SPR) {
-  return ((31 << 26) | (RS << 21) | (SPR << 16) | (467 << 1));
+    return ((31 << 26) | (RS << 21) | (SPR << 16) | (467 << 1));
 }
 constexpr inline uint32_t PowerPC_MFSPR(uint32_t RT, uint32_t SPR) {
-  return ((31 << 26) | (RT << 21) | (SPR << 16) | (339 << 1));
+    return ((31 << 26) | (RT << 21) | (SPR << 16) | (339 << 1));
 }
 constexpr inline uint32_t PowerPC_LWZ(uint32_t RT, uint32_t RA, uint16_t D) {
-  return ((32 << 26) | (RT << 21) | (RA << 16) | (D & 0xFFFF));
+    return ((32 << 26) | (RT << 21) | (RA << 16) | (D & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_LBZU(uint32_t RT, uint32_t RA, uint16_t D) {
-  return ((35 << 26) | (RT << 21) | (RA << 16) | (D & 0xFFFF));
+    return ((35 << 26) | (RT << 21) | (RA << 16) | (D & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_STW(uint32_t RS, uint32_t RA, uint16_t D) {
-  return ((36 << 26) | (RS << 21) | (RA << 16) | (D & 0xFFFF));
+    return ((36 << 26) | (RS << 21) | (RA << 16) | (D & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_STBU(uint32_t RS, uint32_t RA, uint16_t D) {
-  return ((39 << 26) | (RS << 21) | (RA << 16) | (D & 0xFFFF));
+    return ((39 << 26) | (RS << 21) | (RA << 16) | (D & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_LI(uint32_t RS, uint32_t VL) {
-  return ((14 << 26) | (RS << 21) | (VL & 0xFFFF));
+    return ((14 << 26) | (RS << 21) | (VL & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_LIS(uint32_t RS, uint32_t VL) {
-  return ((15 << 26) | (RS << 21) | (VL & 0xFFFF));
+    return ((15 << 26) | (RS << 21) | (VL & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_ANDC(uint32_t RS, uint32_t RA, uint32_t RB) {
-  return ((31 << 26) | (RS << 21) | (RA << 16) | (RB << 11) | (60 << 1));
+    return ((31 << 26) | (RS << 21) | (RA << 16) | (RB << 11) | (60 << 1));
 }
 constexpr inline uint32_t PowerPC_ADDI(uint32_t RT, uint32_t RA, uint16_t SI) {
-  return ((14 << 26) | (RT << 21) | (RA << 16) | (SI & 0xFFFF));
+    return ((14 << 26) | (RT << 21) | (RA << 16) | (SI & 0xFFFF));
 }
 constexpr inline uint32_t PowerPC_BDNZ(uint32_t D, uint32_t AA, uint32_t LK) {
-  return ((16 << 26) | (16 << 21) | ((D << 16) & 0xFFFF) | (AA << 1) | LK);
+    return ((16 << 26) | (16 << 21) | ((D << 16) & 0xFFFF) | (AA << 1) | LK);
 }
 constexpr inline uint32_t PowerPC_ORI(uint32_t RS, uint32_t RA, uint16_t UI) {
-  return ((24 << 26) | (RS << 21) | (RA << 16) | (UI & 0xFFFF));
+    return ((24 << 26) | (RS << 21) | (RA << 16) | (UI & 0xFFFF));
 }
 
 typedef struct PowerPC_MemoryRegisters {
-  uint32_t sdr1;
-  uint32_t dbatu[8];
-  uint32_t dbatl[8];
-  uint32_t ibatu[8];
-  uint32_t ibatl[8];
-  uint32_t sr[16];
+    uint32_t sdr1;
+    uint32_t dbatu[8];
+    uint32_t dbatl[8];
+    uint32_t ibatu[8];
+    uint32_t ibatl[8];
+    uint32_t sr[16];
 } PowerPC_MemoryRegisters;
 
-extern "C" void GetMemoryRegisters(PowerPC_MemoryRegisters *reg);
+extern "C" void GetMemoryRegisters(PowerPC_MemoryRegisters* reg);
 
-extern "C" void kern_write(void *addr, uint32_t value);
+extern "C" void kern_write(void* addr, uint32_t value);
 
 #define RETURN_TO_HBL (0)
 #define RETURN_TO_NEXT_APP (-3)
@@ -250,31 +246,25 @@ extern "C" void kern_write(void *addr, uint32_t value);
 #define KERN_SYSCALL_TBL_2 0xFFE85070 // works with games
 #define KERN_SYSCALL_TBL_3 0xFFE85470 // works with loader
 #define KERN_SYSCALL_TBL_4 0xFFEAAA60 // works with home menu
-#define KERN_SYSCALL_TBL_5                                                     \
-  0xFFEAAE60 // works with browser (previously KERN_SYSCALL_TBL)
+#define KERN_SYSCALL_TBL_5 0xFFEAAE60 // works with browser (previously KERN_SYSCALL_TBL)
 
 static inline void wiiu_set_syscall(int index, uint32_t func_ptr) {
-  kern_write((void *)(KERN_SYSCALL_TBL_1 + (index * 4)), func_ptr);
-  kern_write((void *)(KERN_SYSCALL_TBL_2 + (index * 4)), func_ptr);
-  kern_write((void *)(KERN_SYSCALL_TBL_3 + (index * 4)), func_ptr);
-  kern_write((void *)(KERN_SYSCALL_TBL_4 + (index * 4)), func_ptr);
-  kern_write((void *)(KERN_SYSCALL_TBL_5 + (index * 4)), func_ptr);
+    kern_write((void*)(KERN_SYSCALL_TBL_1 + (index * 4)), func_ptr);
+    kern_write((void*)(KERN_SYSCALL_TBL_2 + (index * 4)), func_ptr);
+    kern_write((void*)(KERN_SYSCALL_TBL_3 + (index * 4)), func_ptr);
+    kern_write((void*)(KERN_SYSCALL_TBL_4 + (index * 4)), func_ptr);
+    kern_write((void*)(KERN_SYSCALL_TBL_5 + (index * 4)), func_ptr);
 }
 
-constexpr inline uint32_t GetWIMG(bool write_through, bool caching_inhibited,
-                                  bool mem_coherence, bool guarded) {
-  return ((write_through & 1) << 3) | ((caching_inhibited & 1) << 2) |
-         ((mem_coherence & 1) << 1) | (guarded & 1);
+constexpr inline uint32_t GetWIMG(bool write_through, bool caching_inhibited, bool mem_coherence, bool guarded) {
+    return ((write_through & 1) << 3) | ((caching_inhibited & 1) << 2) | ((mem_coherence & 1) << 1) | (guarded & 1);
 }
 
 extern "C" void ReadKernelPhysical(uint32_t pa_dest, uint32_t src, size_t size);
-void __attribute__((optimize("O0")))
-__ReadKernelPhysical(uint32_t pa_dest, uint32_t src, size_t size);
+void __attribute__((optimize("O0"))) __ReadKernelPhysical(uint32_t pa_dest, uint32_t src, size_t size);
 
-extern "C" void WriteKernelPhysical(uint32_t pa_dest, uint32_t src,
-                                    uint32_t size);
-void __attribute__((optimize("O0")))
-__WriteKernelPhysical(uint32_t pa_dest, uint32_t src, uint32_t size);
+extern "C" void WriteKernelPhysical(uint32_t pa_dest, uint32_t src, uint32_t size);
+void __attribute__((optimize("O0"))) __WriteKernelPhysical(uint32_t pa_dest, uint32_t src, uint32_t size);
 
 extern "C" uint64_t SetSegmentRegister(uint32_t segment, uint32_t id);
 extern "C" uint32_t __SetSegmentRegister(uint32_t segment, uint32_t id);
@@ -282,6 +272,6 @@ extern "C" uint32_t __SetSegmentRegister(uint32_t segment, uint32_t id);
 extern "C" uint32_t OSGetDABR();
 extern "C" uint32_t __OSGetDABR();
 
-void __GetMemoryRegisters(PowerPC_MemoryRegisters *data);
+void __GetMemoryRegisters(PowerPC_MemoryRegisters* data);
 
 #endif

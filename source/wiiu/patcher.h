@@ -7,10 +7,10 @@
 
 typedef struct PatchedFunction {
 
-  uint32_t sourceAddr;
-  uint32_t sourceInstructions[10];
-  uint32_t destAddr;
-  void *realFunctionPtr;
+    uint32_t sourceAddr;
+    uint32_t sourceInstructions[10];
+    uint32_t destAddr;
+    void* realFunctionPtr;
 
 } PatchedFunction;
 
@@ -22,7 +22,7 @@ typedef struct PatchedFunction {
  * @param  value: A value to write
  * @retval None
  */
-void Write32(uint32_t *addr, uint32_t value);
+void Write32(uint32_t* addr, uint32_t value);
 
 /**
  * @brief  A basic memcpy but it goes through mem portection
@@ -32,7 +32,7 @@ void Write32(uint32_t *addr, uint32_t value);
  * @param  size: Size to copy from source to dest
  * @retval None
  */
-void MemoryCopy(void *dest, void *src, int size);
+void MemoryCopy(void* dest, void* src, int size);
 
 /**
  * @brief  Create a BL (Branch with Link) PowerPC 32-bit instruction
@@ -57,7 +57,7 @@ uint32_t doBLA(uint32_t addr);
  * @param  ptr: PatchedFunction pointer returned by one of the hooking function
  * @retval None
  */
-void removePatch(PatchedFunction *ptr);
+void removePatch(PatchedFunction* ptr);
 
 /**
  * @brief  Hooks a function by writing a branch into the code
@@ -67,7 +67,7 @@ void removePatch(PatchedFunction *ptr);
  * @param  delta: The value to be added at source (e.g, for MK8 it's 0x0C180000)
  * @retval PatchedFunction pointer
  */
-PatchedFunction *hookBranch(uint32_t source, void *destination, uint32_t delta);
+PatchedFunction* hookBranch(uint32_t source, void* destination, uint32_t delta);
 
 /**
  * @brief  Hooks a function by writing a branch with link into the code
@@ -77,8 +77,7 @@ PatchedFunction *hookBranch(uint32_t source, void *destination, uint32_t delta);
  * @param  delta: The value to be added at source (e.g, for MK8 it's 0x0C180000)
  * @retval PatchedFunction pointer
  */
-PatchedFunction *hookBranchNoLink(uint32_t source, void *destination,
-                                  uint32_t delta);
+PatchedFunction* hookBranchNoLink(uint32_t source, void* destination, uint32_t delta);
 
 /**
  * @brief  Hooks a function by writing a branch, while the real function can
@@ -90,8 +89,7 @@ PatchedFunction *hookBranchNoLink(uint32_t source, void *destination,
  * @param  fptr: Out pointer for the (real) unpatched function
  * @retval PatchedFunction pointer
  */
-PatchedFunction *hookFunction(void *source, void *destination, uint32_t delta,
-                              void **fptr);
+PatchedFunction* hookFunction(void* source, void* destination, uint32_t delta, void** fptr);
 
 /**
  * @brief  Initalize data structures to store to function hooks, etc..
@@ -100,38 +98,29 @@ PatchedFunction *hookFunction(void *source, void *destination, uint32_t delta,
  */
 void InitializePatcher();
 
-#define HOOK_BRANCH_LINK(source, dest)                                         \
-  hookBranch((uint32_t)source, (void *)hook_##dest, 0);
-#define HOOK_BRANCH(source, dest)                                              \
-  hookBranchNoLink((uint32_t)source, (void *)hook_##dest, 0);
-#define HOOK_FUNC(source, dest)                                                \
-  hookFunction((void *)source, (void *)hook_##dest, 0, (void **)&real_##dest);
+#define HOOK_BRANCH_LINK(source, dest) hookBranch((uint32_t)source, (void*)hook_##dest, 0);
+#define HOOK_BRANCH(source, dest) hookBranchNoLink((uint32_t)source, (void*)hook_##dest, 0);
+#define HOOK_FUNC(source, dest) hookFunction((void*)source, (void*)hook_##dest, 0, (void**)&real_##dest);
 
-#define MK8_HOOK_BRANCH_LINK(source, dest)                                     \
-  hookBranch((uint32_t)source, (void *)hook_##dest, 0x0C180000);
-#define MK8_HOOK_BRANCH(source, dest)                                          \
-  hookBranchNoLink((uint32_t)source, (void *)hook_##dest, 0x0C180000);
-#define MK8_HOOK_FUNC(source, dest)                                            \
-  hookFunction((void *)source, (void *)hook_##dest, 0x0C180000,                \
-               (void **)&real_##dest);
+#define MK8_HOOK_BRANCH_LINK(source, dest) hookBranch((uint32_t)source, (void*)hook_##dest, 0x0C180000);
+#define MK8_HOOK_BRANCH(source, dest) hookBranchNoLink((uint32_t)source, (void*)hook_##dest, 0x0C180000);
+#define MK8_HOOK_FUNC(source, dest) hookFunction((void*)source, (void*)hook_##dest, 0x0C180000, (void**)&real_##dest);
 
-#define DECL_HOOK(res, name, ...)                                              \
-  res (*real_##name)(__VA_ARGS__);                                             \
-  res hook_##name(__VA_ARGS__)
+#define DECL_HOOK(res, name, ...)    \
+    res (*real_##name)(__VA_ARGS__); \
+    res hook_##name(__VA_ARGS__)
 
 #define DECL_HOOK_BRANCH(res, name, ...) res hook_##name(__VA_ARGS__)
 
-#define DECL_CXX_HOOK(res, name, ...)                                          \
-  namespace hook {                                                             \
-  namespace hook_##name {                                                      \
-    res (*real)(__VA_ARGS__);                                                  \
-    res hook(__VA_ARGS__);                                                     \
-  }                                                                            \
-  }                                                                            \
-  res hook::hook_##name::hook(__VA_ARGS__)
+#define DECL_CXX_HOOK(res, name, ...) \
+    namespace hook {                  \
+    namespace hook_##name {           \
+        res (*real)(__VA_ARGS__);     \
+        res hook(__VA_ARGS__);        \
+    }                                 \
+    }                                 \
+    res hook::hook_##name::hook(__VA_ARGS__)
 
-#define MK8_HOOK_CXX_FUNC(source, dest)                                        \
-  hookFunction((void *)source, (void *)hook::hook_##dest::hook, 0x0C180000,    \
-               (void **)&hook::hook_##dest::real);
+#define MK8_HOOK_CXX_FUNC(source, dest) hookFunction((void*)source, (void*)hook::hook_##dest::hook, 0x0C180000, (void**)&hook::hook_##dest::real);
 
 #endif

@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-
 #include "wiiu/iosu_kernel.h"
 #include "wiiu/patcher.h"
 
@@ -14,7 +13,6 @@
 #include "patch/global_patch.hpp"
 #include "patch/message.hpp"
 #include "patch/online.hpp"
-
 
 #include <mk8/enl/Framework.hpp>
 #include <mk8/enl/MatchingManager.hpp>
@@ -32,8 +30,7 @@
 #include <mk8/ui/UIEngine.hpp>
 #include <mk8/ui/UIEvent.hpp>
 
-
-int MainThread(int argc, void *argv);
+int MainThread(int argc, void* argv);
 
 extern bool readyToExit;
 

@@ -13,16 +13,16 @@
 #define ONLINE_TOGGLE_MSG_ID 23338
 
 typedef struct MessageData {
-  bool active;
-  bool alloc;
-  int id;
-  char16_t *message;
+    bool active;
+    bool alloc;
+    int id;
+    char16_t* message;
 } MessageData;
 
 void InitializePatchMessage();
-void AddMessage(char16_t *text, int id, bool alloc = false);
-void ModifyMessage(char16_t *text, int id, bool alloc = true);
-char16_t *fromUTF8(char *text);
+void AddMessage(char16_t* text, int id, bool alloc = false);
+void ModifyMessage(char16_t* text, int id, bool alloc = true);
+char16_t* fromUTF8(char* text);
 
 extern MessageData messages[MAX_MESSAGE_COUNT];
 

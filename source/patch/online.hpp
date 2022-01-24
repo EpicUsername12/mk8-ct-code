@@ -30,56 +30,54 @@
 namespace ctgp {
 
 enum PacketID : uint32_t {
-  PACKET_ID_SEND_TRACK_PAGE,
-  PACKET_ID_SEND_TRACK_IDS,
+    PACKET_ID_SEND_TRACK_PAGE,
+    PACKET_ID_SEND_TRACK_IDS,
 };
 
 class OnlinePatch : ctgp::common::RootClass {
-private:
-public:
-  int m_TrackOptionsPage[4] = {0, 0, 0, 0};
+  private:
+  public:
+    int m_TrackOptionsPage[4] = { 0, 0, 0, 0 };
 
-public:
-  /**
-   * @brief Construct a new Online Patch object
-   *
-   */
-  OnlinePatch() { this->setName("ctgp::OnlinePatch"); }
+  public:
+    /**
+     * @brief Construct a new Online Patch object
+     *
+     */
+    OnlinePatch() {
+        this->setName("ctgp::OnlinePatch");
+    }
 
-  /**
-   * @brief Initialize the OnlinePatch object
-   *
-   */
-  virtual void Initialize();
+    /**
+     * @brief Initialize the OnlinePatch object
+     *
+     */
+    virtual void Initialize();
 
-  static void SendToStation(int stationId, void *buffer) {
-    sockaddr_in tmp_addr = {0};
-    nn::pia::common::StationAddress client_addr;
-    nn::pia::transport::StationManager::getInstance()->GetStationAddress(
-        &client_addr, stationId);
-    tmp_addr.sin_addr.s_addr = client_addr.inetAddress.host;
-    tmp_addr.sin_port = client_addr.inetAddress.port;
-    tmp_addr.sin_family = AF_INET;
-    for (int i = 0; i < 4; i++)
-      sendto(nn::pia::transport::ThreadStreamManager::getInstance()
-                 ->getOutputStream()
-                 ->socket->fd,
-             buffer, 0x554, 0x60, (const sockaddr_in *)&tmp_addr, 16);
-  }
+    static void SendToStation(int stationId, void* buffer) {
+        sockaddr_in tmp_addr = { 0 };
+        nn::pia::common::StationAddress client_addr;
+        nn::pia::transport::StationManager::getInstance()->GetStationAddress(&client_addr, stationId);
+        tmp_addr.sin_addr.s_addr = client_addr.inetAddress.host;
+        tmp_addr.sin_port = client_addr.inetAddress.port;
+        tmp_addr.sin_family = AF_INET;
+        for (int i = 0; i < 4; i++)
+            sendto(nn::pia::transport::ThreadStreamManager::getInstance()->getOutputStream()->socket->fd, buffer, 0x554, 0x60, (const sockaddr_in*)&tmp_addr, 16);
+    }
 
-  /**
-   * @brief Create a Instance of OnlinePatch
-   *
-   * @return ctgp::OnlinePatch*
-   */
-  static inline ctgp::OnlinePatch *createInstance() {
-    ctgp::OnlinePatch *inst = new ctgp::OnlinePatch();
-    inst->Initialize();
-    return inst;
-  }
+    /**
+     * @brief Create a Instance of OnlinePatch
+     *
+     * @return ctgp::OnlinePatch*
+     */
+    static inline ctgp::OnlinePatch* createInstance() {
+        ctgp::OnlinePatch* inst = new ctgp::OnlinePatch();
+        inst->Initialize();
+        return inst;
+    }
 };
 
-extern OnlinePatch *OnlinePatchInstance;
+extern OnlinePatch* OnlinePatchInstance;
 
 } // namespace ctgp
 

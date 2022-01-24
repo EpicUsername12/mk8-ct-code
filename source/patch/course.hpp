@@ -27,10 +27,10 @@
 #include <tuple>
 
 struct CupButtonHolder {
-  ui::Control_CupButton *controlL1 = NULL;
-  ui::Control_CupButton *controlL2 = NULL;
-  ui::Control_CupButton *controlR1 = NULL;
-  ui::Control_CupButton *controlR2 = NULL;
+    ui::Control_CupButton* controlL1 = NULL;
+    ui::Control_CupButton* controlL2 = NULL;
+    ui::Control_CupButton* controlR1 = NULL;
+    ui::Control_CupButton* controlR2 = NULL;
 };
 
 #define DELUXE_RETRO_MSG_ID 25000
@@ -39,40 +39,42 @@ struct CupButtonHolder {
 namespace ctgp {
 
 class CoursePatch : ctgp::common::RootClass {
-private:
-public:
-  bool m_CustomBattle = false;
-  int m_CurrentPageNum = 0;
-  std::map<int, CupButtonHolder> m_ButtonHolders;
+  private:
+  public:
+    bool m_CustomBattle = false;
+    int m_CurrentPageNum = 0;
+    std::map<int, CupButtonHolder> m_ButtonHolders;
 
-public:
-  /**
-   * @brief Construct a new Course Patch object
-   *
-   */
-  CoursePatch() { this->setName("ctgp::CoursePatch"); }
+  public:
+    /**
+     * @brief Construct a new Course Patch object
+     *
+     */
+    CoursePatch() {
+        this->setName("ctgp::CoursePatch");
+    }
 
-  void LoadPage();
+    void LoadPage();
 
-  /**
-   * @brief Initialize the CoursePatch object
-   *
-   */
-  virtual void Initialize();
+    /**
+     * @brief Initialize the CoursePatch object
+     *
+     */
+    virtual void Initialize();
 
-  /**
-   * @brief Create a Instance of CoursePatch
-   *
-   * @return ctgp::CoursePatch*
-   */
-  static inline ctgp::CoursePatch *createInstance() {
-    ctgp::CoursePatch *inst = new ctgp::CoursePatch();
-    inst->Initialize();
-    return inst;
-  }
+    /**
+     * @brief Create a Instance of CoursePatch
+     *
+     * @return ctgp::CoursePatch*
+     */
+    static inline ctgp::CoursePatch* createInstance() {
+        ctgp::CoursePatch* inst = new ctgp::CoursePatch();
+        inst->Initialize();
+        return inst;
+    }
 };
 
-extern CoursePatch *CoursePatchInstance;
+extern CoursePatch* CoursePatchInstance;
 
 } // namespace ctgp
 
