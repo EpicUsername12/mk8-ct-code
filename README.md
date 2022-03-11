@@ -1,7 +1,7 @@
 
 # MK8 WiiU CTGP-Cafe Code
   
-Initial release
+This version is now obsolete and the **repo is archived**, join the [**discord server**](https://discord.gg/wqSx6hRCgA) for more information.
 
 # What's required
 
