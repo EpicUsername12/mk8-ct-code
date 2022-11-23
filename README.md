@@ -3,6 +3,8 @@
   
 This version is now obsolete and the **repo is archived**, join the [**discord server**](https://discord.gg/wqSx6hRCgA) for more information.
 
+It has been replaced with the cafeloader version who was opensource until v1.1.1+, where it went back to private
+
 # What's required
 
 For C/C++:
